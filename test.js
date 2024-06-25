@@ -15,6 +15,16 @@ tape('should respond hello', (t) => {
   })
 })
 
+tape('should respond with base64 encoded message', (t) => {
+  const testMessage = 'test';
+  const expectedBase64 = Buffer.from(testMessage).toString('base64');
+  jsonist.get(`${urlBase}/base64?msg=${testMessage}`, (err, body) => {
+    if (err) t.error(err);
+    t.equal(body.encoded, expectedBase64, 'Base64 encoded message matches expected');
+    t.end();
+  });
+});
+
 tape('cleanup', function (t) {
   server.close()
   t.end()
