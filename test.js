@@ -25,6 +25,20 @@ tape('should respond with base64 encoded message', (t) => {
   });
 });
 
+tape('should respond with user-agent', (t) => {
+  const options = {
+    headers: {
+      'User-Agent': 'test-agent'
+    }
+  };
+  jsonist.get(`${urlBase}/user-agent`, options, (err, body) => {
+    if (err) t.error(err);
+
+    t.equal(body.userAgent, 'test-agent', 'User-Agent matches expected');
+    t.end();
+  });
+});
+
 tape('cleanup', function (t) {
   server.close()
   t.end()

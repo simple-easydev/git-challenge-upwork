@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3000
 const server = http.createServer((req, res) => {
   if (req.url === '/') return respondHello(req, res)
     if (req.url.startsWith('/base64')) return respondBase64(req, res); // Add base64 endpoint.
+  if (req.url.startsWith('/user-agent')) return respondUserAgent(req, res); // Add user-agent endpoint.
 
   res.end()
 })
@@ -21,6 +22,10 @@ function respondBase64(req, res) {
   res.end(JSON.stringify({ encoded: base64Encoded }));
 }
 
+function respondUserAgent(req, res) {
+  const userAgent = req.headers['user-agent'];
+  res.end(JSON.stringify({ userAgent }));
+}
 
 server.listen(PORT)
 console.log(`Server listening on port ${PORT}`)
